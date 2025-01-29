@@ -1,0 +1,2 @@
+POST http://localhost:9025/api/cart/add?productId=12&quantity=2
+Content-Type: application/x-www-form-urlencoded

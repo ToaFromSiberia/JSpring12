@@ -1,0 +1,67 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: "WEB-CLIENT"
+
+# Cloud Bus + RabbitMQ
+  cloud:
+    bus:
+      enabled: true
+      amqp:
+        enabled: true
+        host: localhost
+        port: 5672
+        username: guest
+        password: guest
+  amqp:
+    enabled: true
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+
+  security:
+    oauth2:
+      client:
+        provider:
+          spring:
+            issuer-uri: http://localhost:8090
+            jwk-set-uri: http://localhost:8090/oauth2/jwks
+        registration:
+          apm-client:
+            provider: spring
+            client-id: client
+            client-secret: "secret"
+            authorization-grant-type: authorization_code
+            client-authentication-method: client_secret_basic
+            redirect-uri: "http://127.0.0.1:8080//login/oauth2/code/apm-client"
+            scope:
+              - user.read
+              - user.write
+              - openid
+  output.ansi.enabled: ALWAYS
+
+# настройки Эврики
+eureka:
+  client:
+    service-url:
+      defaultZone:
+        http://localhost:7777/eureka
+    register-with-eureka: true                # Регистрация клиента в Eureka Server
+    fetch-registry: true                      # Извлечение реестра из Eureka Server
+    retry-on-connect-errors: true             # Повторные подключения к Eureka при сбоях
+  instance:
+    prefer-ip-address: false                  # Использовать IP-адрес вместо имени хоста
+    lease-renewal-interval-in-seconds: 10     # Интервал отправки heartbeats
+    lease-expiration-duration-in-seconds: 30  # Таймаут для истечения lease (сердцебиений)
+
+#logging:
+#  level:
+#    org.springframework.security.oauth2: DEBUG
+#    org.springframework.security: DEBUG
+#    org.springframework.web: DEBUG
+#    org.springframework.security.jwt: DEBUG
+#    org.springframework.security.oauth2.client: DEBUG
+#    org.springframework.security.oauth2.core: DEBUG
