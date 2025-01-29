@@ -1,0 +1,85 @@
+spring:
+  application:
+    name: "GATEWAY-SERVER"
+
+  profiles:
+    active: mcprofile
+
+  config:
+    import: optional:configserver:http://localhost:8888
+#
+#server:
+#  port: 9010
+#
+#spring:
+#  application:
+#    name: "GATEWAY-SERVER"
+#
+#
+#  output:
+#    ansi:
+#      enabled: ALWAYS
+#
+#  security:
+#    oauth2:
+#      resourceserver:
+#        jwt:
+#          issuer-uri: http://localhost:8090     # сервер аутентификации
+#
+#  cloud:
+#    gateway:
+#      discovery:
+#        locator:
+#          enabled: true
+#          lower-case-service-id: false
+#      routes:
+#        - id: storage-service
+#          uri: lb://STORAGE-SERVICE
+#          predicates:
+#            - Path=/api/storage/**
+#          filters:
+#            - Retry=5         # Повторить запрос до 5 раз при сбое
+##            - RemoveRequestHeader=Authorization   # удаляем исходный токен
+#
+#        - id: transfer-service
+#          uri: lb://TRANSFER-SERVICE
+#          predicates:
+#            - Path=/api/transfer/**
+#          filters:
+#            - Retry=5         # Повторить запрос до 5 раз при сбое
+##            - RemoveRequestHeader=Authorization   # удаляем исходный токен
+#
+#        - id: logger-service
+#          uri: lb://LOGGER-SERVICE
+#          predicates:
+#            - Path=/api/logger/**
+#          filters:
+#            - Retry=5         # Повторить запрос до 5 раз при сбое
+#            - RemoveRequestHeader=Authorization   # удаляем исходный токен
+#
+#    loadbalancer:
+#      retry:
+#        enabled: true                         # Повторные попытки при сбоях балансировщика
+#      healthCheck:
+#        enabled: true                         # включение проверки состояния для сервисов
+#
+#
+## настройки Эврики
+#eureka:
+#  client:
+#    service-url:
+#      defaultZone:
+#        http://localhost:7777/eureka
+#    register-with-eureka: true                # Регистрация клиента в Eureka Server
+#    fetch-registry: true                      # Извлечение реестра из Eureka Server
+#    retry-on-connect-errors: true             # Повторные подключения к Eureka при сбоях
+#  instance:
+#    prefer-ip-address: false                  # Использовать IP-адрес вместо имени хоста
+#    lease-renewal-interval-in-seconds: 10     # Интервал отправки heartbeats
+#    lease-expiration-duration-in-seconds: 30  # Таймаут для истечения lease (сердцебиений)
+#
+
+#logging:
+#  level:
+#    org:
+#      springframework: DEBUG
